@@ -58,7 +58,6 @@ function App() {
 }
 
 function Header() {
-  //   const style = { color: "red", fontSize: "48px", textTransform: "uppercase" };
   const style = {};
 
   return (
@@ -104,16 +103,18 @@ function Menu() {
   );
 }
 
-function Pizza(props) {
-  console.log(props);
+function Pizza({ pizzaObj }) {
+  console.log(pizzaObj);
+
+  if (pizzaObj.soldOut) return null;
 
   return (
     <li className="pizza">
-      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name}></img>
+      <img src={pizzaObj.photoName} alt={pizzaObj.name}></img>
       <div>
-        <h3>{props.pizzaObj.name}</h3>
-        <p>{props.pizzaObj.ingredients}</p>
-        <span>{props.pizzaObj.price + 3}</span>
+        <h3>{pizzaObj.name}</h3>
+        <p>{pizzaObj.ingredients}</p>
+        <span>{pizzaObj.price + 3}</span>
       </div>
     </li>
   );
@@ -129,13 +130,12 @@ function Footer() {
   //   if (hour >= openHour && hour <= closeHour) alert("we're currently open!");
   //   else alert("Sorry we're closed");
 
+  //
+
   return (
     <footer className="footer">
-      {isOpen ? ( //de inversat
-        <div className="order">
-          <p>We're open until {closeHour}:00. Come visit us or order online.</p>
-          <button className="btn">Order</button>
-        </div>
+      {isOpen ? (
+        <Order closeHour={closeHour} openHour={openHour} />
       ) : (
         <p>
           We're happy to welcome you between {openHour}:00 and {closeHour}:00{" "}
@@ -145,6 +145,18 @@ function Footer() {
   );
 
   //   return React.createElement("footer", null, "We're currently open!");
+}
+
+function Order({ closeHour, openHour }) {
+  return (
+    <div className="order">
+      <p>
+        We're open from {openHour} to {closeHour}:00. Come visit us or order
+        online.
+      </p>
+      <button className="btn">Order</button>
+    </div>
+  );
 }
 
 //React v18
